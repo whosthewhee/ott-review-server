@@ -5,8 +5,8 @@ export type ContentDocument = Content & Document;
 
 @Schema()
 export class Content {
-  @Prop({ required: true })
-  content_id: number;
+  // @Prop({ required: true })
+  // content_id: number;
 
   @Prop({ required: true })
   title: string;
@@ -17,8 +17,8 @@ export class Content {
   @Prop({ required: true })
   imageUrl: string;
 
-  @Prop({ required: true })
-  platform_id: number;
+  // @Prop({ required: true })
+  // platform_id: number;
 }
 
 export const ContentSchema = SchemaFactory.createForClass(Content);
