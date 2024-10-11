@@ -1,6 +1,6 @@
 export class CreateCategoryDto {
-  category_id: number;
-  category_nm: string;
-  reg_dt: string;
-  chg_dt: string;
+  //category_id: number;
+  name: string;
+  regDate: Date;
+  chgDate: Date;
 }

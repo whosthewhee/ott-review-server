@@ -5,17 +5,17 @@ export type CategoryDocument = Category & Document;
 
 @Schema()
 export class Category {
-  @Prop({ required: true })
-  category_id: number;
+  // @Prop({ required: true })
+  // category_id: number;
 
   @Prop({ required: true })
-  category_nm: string;
+  name: string;
 
   @Prop({ required: true })
-  reg_dt: string;
+  regDate: string;
 
   @Prop({ required: true })
-  chg_dt: string;
+  chgDate: string;
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category);
