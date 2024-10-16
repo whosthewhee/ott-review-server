@@ -3,6 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config'; //env 환경변수 가져올때 사용
 import { CategoriesModule } from './categories/categories.module';
 import { ContentsModule } from './contents/contents.module';
+import { PlatformsModule } from './platforms/platforms.module';
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import { ContentsModule } from './contents/contents.module';
     MongooseModule.forRoot(process.env.MONGODB_URI), // MongoDB 연결-환경 변수에서 MongoDB URI를 가져옴
     CategoriesModule, // Categories 모듈 추가
     ContentsModule, // Contents 모듈 추가
+    PlatformsModule, // Platforms 모듈 추가
   ],
 })
 export class AppModule {}

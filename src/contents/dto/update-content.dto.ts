@@ -1,20 +1,20 @@
-import mongoose from 'mongoose';
 import { Platform } from 'src/platforms/schemas/platform.schema';
 import { Category } from 'src/categories/schemas/category.schema';
 
-export class CreateContentDto {
-  //contentId: number;
+export class UpdateContentDto {
   title: string;
   rating: number;
   imageUrl: string;
   platformName: string;
   categoryName: string;
   typeName: string;
-  //내장 도큐먼트
   productionCompany: productionCompany;
+
   //참조 도큐먼트 (platform, category)
-  platform: Platform;
-  category: Category;
+  // platforms: mongoose.Types.ObjectId;
+  // categories: mongoose.Types.ObjectId;
+  platforms: Platform;
+  categories: Category;
 }
 
 class productionCompany {

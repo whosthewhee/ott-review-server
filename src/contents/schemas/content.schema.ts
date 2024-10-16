@@ -1,12 +1,23 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document, mongo } from 'mongoose';
+import { Category } from 'src/categories/schemas/category.schema';
+import { Platform } from 'src/platforms/schemas/platform.schema';
 
-export type ContentDocument = Content & Document;
+class ProductionCompany {
+  @Prop({ required: true })
+  name: string;
+
+  @Prop({ required: true })
+  founded: number;
+
+  @Prop({ required: true })
+  country: string;
+}
 
 @Schema()
 export class Content {
   // @Prop({ required: true })
-  // content_id: number;
+  // contentId: number;
 
   @Prop({ required: true })
   title: string;
@@ -17,21 +28,25 @@ export class Content {
   @Prop({ required: true })
   imageUrl: string;
 
-  /*일단 만들고 나중에 외래키/테이블로 분리하기 */
   @Prop({ required: true })
-  platform_nm: string;
-
-  // @Prop({ required: true })
-  // platform_id: number;
+  platformName: string;
 
   @Prop({ required: true })
-  category_nm: string;
+  categoryName: string;
 
   @Prop({ required: true })
-  type_nm: string;
+  typeName: string;
 
-  // @Prop({ required: true })
-  // category_id: number;
+  @Prop({ type: ProductionCompany, required: true })
+  productionCompany: ProductionCompany;
+
+  //참조 도큐먼트 (platform, category)
+  @Prop({ type: [{ type: mongoose.Types.ObjectId, ref: 'platforms' }] })
+  platform: Platform;
+
+  @Prop({ type: [{ type: mongoose.Types.ObjectId, ref: 'categories' }] })
+  category: Category;
 }
 
+export type ContentDocument = Content & Document;
 export const ContentSchema = SchemaFactory.createForClass(Content);

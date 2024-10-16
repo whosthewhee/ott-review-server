@@ -1,12 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type CategoryDocument = Category & Document;
-
 @Schema()
-export class Category {
+export class Platform extends Document {
   @Prop({ required: true })
   name: string;
+
+  @Prop({ required: true, default: true })
+  isActive: boolean;
 
   @Prop({ required: true })
   createdDate: string;
@@ -15,4 +16,5 @@ export class Category {
   updatedDate: string;
 }
 
-export const CategorySchema = SchemaFactory.createForClass(Category);
+export type PlatformDocument = Platform & Document;
+export const PlatformSchema = SchemaFactory.createForClass(Platform);
