@@ -3,4 +3,5 @@ export class CreatePlatformDto {
   isActive: boolean;
   createdDate: string;
   updatedDate: string;
+  logoImage: string;
 }

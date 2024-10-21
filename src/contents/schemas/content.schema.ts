@@ -16,8 +16,8 @@ class ProductionCompany {
 
 @Schema()
 export class Content {
-  // @Prop({ required: true })
-  // contentId: number;
+  @Prop({ required: true })
+  _id: string;
 
   @Prop({ required: true })
   title: string;

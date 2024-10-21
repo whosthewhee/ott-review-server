@@ -1,9 +1,7 @@
-import mongoose from 'mongoose';
 import { Platform } from 'src/platforms/schemas/platform.schema';
 import { Category } from 'src/categories/schemas/category.schema';
 
 export class CreateContentDto {
-  //contentId: number;
   title: string;
   rating: number;
   imageUrl: string;

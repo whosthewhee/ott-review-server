@@ -14,6 +14,9 @@ export class Platform extends Document {
 
   @Prop({ required: true })
   updatedDate: string;
+
+  @Prop({ required: true })
+  logoImage: string;
 }
 
 export type PlatformDocument = Platform & Document;

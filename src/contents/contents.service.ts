@@ -32,6 +32,7 @@ export class ContentsService {
 
       const data = contents.map((content: Content) => {
         return {
+          _id: content._id,
           title: content.title,
           rating: content.rating,
           imageUrl: content.imageUrl,
@@ -104,6 +105,7 @@ export class ContentsService {
       }
 
       const data: Content = {
+        _id: updatedContent._id,
         title: updatedContent.title,
         rating: updatedContent.rating,
         imageUrl: updatedContent.imageUrl,
