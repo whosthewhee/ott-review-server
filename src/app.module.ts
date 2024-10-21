@@ -6,6 +6,7 @@ import { ContentsModule } from './contents/contents.module';
 import { PlatformsModule } from './platforms/platforms.module';
 import { BannerContentsModule } from './bannerContents/bannerContents.module';
 import { UserModule } from './users/users.module';
+import { ReviewModule } from './reviews/reviews.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { UserModule } from './users/users.module';
     PlatformsModule, // Platforms 모듈 추가
     BannerContentsModule, // BannerContent 모듈 추가
     UserModule, // User 모듈 추가
+    ReviewModule, // Review 모듈 추가
   ],
 })
 export class AppModule {}

@@ -16,34 +16,36 @@ export class BannerContentsController {
 
   // 모든 배너 컨텐츠 가져오기
   @Get()
-  findAll() {
-    return this.bannerContentService.findAll();
+  getAllBannerContents() {
+    return this.bannerContentService.getAllBannerContents();
   }
 
   // 특정 배너 컨텐츠 가져오기
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.bannerContentService.findOne(id);
+  getBannerContentById(@Param('id') id: string) {
+    return this.bannerContentService.getBannerContentById(id);
   }
 
   // 배너 컨텐츠 생성
   @Post()
-  create(@Body() createBannerContentDto: CreateBannerContentDto) {
-    return this.bannerContentService.create(createBannerContentDto);
+  createBannerContent(@Body() createBannerContentDto: CreateBannerContentDto) {
+    return this.bannerContentService.createBannerContent(
+      createBannerContentDto,
+    );
   }
 
   // 배너 컨텐츠 업데이트
   @Put(':id')
-  update(
+  updateBannerContent(
     @Param('id') id: string,
     @Body() updateData: Partial<CreateBannerContentDto>,
   ) {
-    return this.bannerContentService.update(id, updateData);
+    return this.bannerContentService.updateBannerContent(id, updateData);
   }
 
   // 배너 컨텐츠 삭제
   @Delete(':id')
-  delete(@Param('id') id: string) {
-    return this.bannerContentService.delete(id);
+  deleteBannerContent(@Param('id') id: string) {
+    return this.bannerContentService.deleteBannerContent(id);
   }
 }

@@ -16,31 +16,34 @@ export class UserController {
 
   // 모든 유저 가져오기
   @Get()
-  findAll() {
-    return this.userService.findAll();
+  getAllUsers() {
+    return this.userService.getAllUsers();
   }
 
   // 특정 유저 가져오기
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(id);
+  getUserById(@Param('id') id: string) {
+    return this.userService.getUserById(id);
   }
 
   // 유저 생성
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  createUser(@Body() createUserDto: CreateUserDto) {
+    return this.userService.createUser(createUserDto);
   }
 
   // 유저 업데이트
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateData: Partial<CreateUserDto>) {
-    return this.userService.update(id, updateData);
+  updateUser(
+    @Param('id') id: string,
+    @Body() updateData: Partial<CreateUserDto>,
+  ) {
+    return this.userService.updateUser(id, updateData);
   }
 
   // 유저 삭제
   @Delete(':id')
-  delete(@Param('id') id: string) {
-    return this.userService.delete(id);
+  deleteUser(@Param('id') id: string) {
+    return this.userService.deleteUser(id);
   }
 }

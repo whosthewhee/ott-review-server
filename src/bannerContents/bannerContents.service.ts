@@ -12,17 +12,17 @@ export class BannerContentsService {
   ) {}
 
   // 배너 컨텐츠 가져오기(isAcitve가 true인 것만)
-  async findAll(): Promise<BannerContent[]> {
+  async getAllBannerContents(): Promise<BannerContent[]> {
     return this.bannerContentModel.find({ isActive: true }).exec();
   }
 
   // 특정 배너 컨텐츠 가져오기
-  async findOne(id: string): Promise<BannerContent> {
+  async getBannerContentById(id: string): Promise<BannerContent> {
     return this.bannerContentModel.findById(id).exec();
   }
 
   // 배너 컨텐츠 생성
-  async create(
+  async createBannerContent(
     createBannerContentDto: CreateBannerContentDto,
   ): Promise<BannerContent> {
     const createdBanner = new this.bannerContentModel(createBannerContentDto);
@@ -30,7 +30,7 @@ export class BannerContentsService {
   }
 
   // 배너 컨텐츠 업데이트
-  async update(
+  async updateBannerContent(
     id: string,
     updateData: Partial<CreateBannerContentDto>,
   ): Promise<BannerContent> {
@@ -40,7 +40,7 @@ export class BannerContentsService {
   }
 
   // 배너 컨텐츠 삭제
-  async delete(id: string): Promise<BannerContent> {
+  async deleteBannerContent(id: string): Promise<BannerContent> {
     return this.bannerContentModel.findByIdAndDelete(id).exec();
   }
 }
