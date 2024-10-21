@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document, mongo } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import { Category } from 'src/categories/schemas/category.schema';
 import { Platform } from 'src/platforms/schemas/platform.schema';
 
@@ -37,6 +37,7 @@ export class Content {
   @Prop({ required: true })
   typeName: string;
 
+  //내장 도큐먼트
   @Prop({ type: ProductionCompany, required: true })
   productionCompany: ProductionCompany;
 
