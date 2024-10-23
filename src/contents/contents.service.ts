@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Content, ContentDocument } from './schemas/content.schema';
 import { CreateContentDto } from './dto/create-content.dto';
+import { ResultContentDto } from './dto/result-content.dto';
 
 @Injectable()
 export class ContentsService {
@@ -11,13 +12,13 @@ export class ContentsService {
   ) {}
 
   // 모든 컨텐츠 가져오기 =>  참조 도큐먼트 (platform, category)를 가져오기 위해 populate 사용
-  async getAllContents(): Promise<Content[]> {
+  async getAllContents(): Promise<ResultContentDto[]> {
     try {
       const contents = await this.contentModel.find().populate([
         {
-          path: 'platform',
-          select: ['name', 'isActive'],
-          match: { isActive: true },
+          path: 'platform', // 참조할 도큐먼트
+          select: ['name', 'isActive'], // 가져올 필드 선택
+          match: { isActive: true }, // 가져올 때 조건 추가 -> isActive가 true인 platform만 가져오기
           model: 'Platform',
         },
         {
@@ -31,7 +32,7 @@ export class ContentsService {
         return null;
       }
 
-      const data = contents.map((content: Content) => {
+      const data: ResultContentDto[] = contents.map((content: Content) => {
         return {
           _id: content._id,
           title: content.title,
@@ -39,8 +40,6 @@ export class ContentsService {
           imageUrl: content.imageUrl,
           typeName: content.typeName,
           productionCompany: content.productionCompany,
-          platform: content.platform,
-          category: content.category,
           platformName: content.platform[0].name,
           categoryName: content.category[0].name,
         };

@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { ContentsService } from './contents.service';
 import { CreateContentDto } from './dto/create-content.dto';
+import { ResultContentDto } from './dto/result-content.dto';
 import { Content } from './schemas/content.schema';
 
 @Controller('contents')
@@ -16,7 +17,7 @@ export class ContentsController {
   constructor(private readonly contentsService: ContentsService) {}
 
   @Get()
-  async getAllContents(): Promise<Content[]> {
+  async getAllContents(): Promise<ResultContentDto[]> {
     return this.contentsService.getAllContents();
   }
 
