@@ -20,6 +20,9 @@ export class BannerContent extends Document {
 
   @Prop({ required: true })
   postedDate: string;
+
+  @Prop({ required: true })
+  description: string;
 }
 
 export type BannerContentDocument = BannerContent & Document;

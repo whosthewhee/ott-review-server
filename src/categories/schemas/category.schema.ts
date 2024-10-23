@@ -13,6 +13,9 @@ export class Category {
 
   @Prop({ required: true })
   updatedDate: string;
+
+  @Prop({ required: true })
+  viewName: string;
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category);

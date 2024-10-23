@@ -17,6 +17,7 @@ export class ContentsService {
         {
           path: 'platform',
           select: ['name', 'isActive'],
+          match: { isActive: true },
           model: 'Platform',
         },
         {
@@ -36,12 +37,12 @@ export class ContentsService {
           title: content.title,
           rating: content.rating,
           imageUrl: content.imageUrl,
-          platformName: content.platformName,
-          categoryName: content.categoryName,
           typeName: content.typeName,
           productionCompany: content.productionCompany,
           platform: content.platform,
           category: content.category,
+          platformName: content.platform[0].name,
+          categoryName: content.category[0].name,
         };
       });
 

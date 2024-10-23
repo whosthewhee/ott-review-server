@@ -5,4 +5,5 @@ export class CreateBannerContentDto {
   isActive: boolean;
   seq: number;
   postedDate: string;
+  description: string;
 }

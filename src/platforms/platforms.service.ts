@@ -13,7 +13,7 @@ export class PlatformsService {
 
   // 모든 플랫폼 가져오기
   async getAllPlatforms(): Promise<Platform[]> {
-    return this.platformModel.find().exec();
+    return this.platformModel.find({ isActive: true }).exec();
   }
 
   // 특정 플랫폼 가져오기

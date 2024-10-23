@@ -6,7 +6,7 @@ async function bootstrap() {
 
   // CORS 설정
   app.enableCors({
-    origin: 'http://localhost:8000', // 클라이언트 도메인
+    origin: process.env.CLIENT_DOMAIN, // 클라이언트 도메인
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
