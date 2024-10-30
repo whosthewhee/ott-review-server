@@ -17,6 +17,8 @@ export const UserInfoSchema = SchemaFactory.createForClass(UserInfo);
 
 @Schema()
 export class User {
+  _id: Types.ObjectId;
+
   @Prop({ required: true, unique: true })
   email: string;
 

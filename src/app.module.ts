@@ -7,6 +7,7 @@ import { PlatformsModule } from './platforms/platforms.module';
 import { BannerContentsModule } from './bannerContents/bannerContents.module';
 import { UserModule } from './users/users.module';
 import { ReviewModule } from './reviews/reviews.module';
+import { LoginModule } from './login/login.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ReviewModule } from './reviews/reviews.module';
     BannerContentsModule, // BannerContent 모듈 추가
     UserModule, // User 모듈 추가
     ReviewModule, // Review 모듈 추가
+    LoginModule, // Login 모듈 추가
   ],
 })
 export class AppModule {}
