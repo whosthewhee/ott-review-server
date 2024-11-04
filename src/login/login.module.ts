@@ -9,7 +9,7 @@ import { JwtModule } from '@nestjs/jwt';
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     JwtModule.register({
-      secret: process.env.JWT_SECRET,
+      secret: 'your_secret_key',
       signOptions: { expiresIn: '12h' }, // 토큰 유효기간 설정
     }),
   ],

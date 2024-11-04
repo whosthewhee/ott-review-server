@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from '../users/schemas/user.schema';
-import { JwtService } from '@nestjs/jwt';
+import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -35,15 +35,67 @@ export class LoginService {
 
     return user;
   }
-  async login(user: User) {
+  // async login(user: User) {
+  //   const payload = {
+  //     email: user.email,
+  //     userinfo: {
+  //       nickname: user.userinfo.nickname,
+  //       imageUrl: user.userinfo.imageUrl,
+  //     },
+  //     // nickname: user.userinfo.nickname,
+  //     // userImageUrl: user.userinfo.imageUrl,
+  //     sub: user._id,
+  //   };
+
+  //   return {
+  //     accessToken: this.jwtService.sign(payload),
+  //   };
+  // }
+
+  async login(email: string, password: string) {
+    const user = await this.validateUser(email, password);
+
+    // JWT 토큰 옵션 설정 (서비스 또는 컨트롤러에서 직접 설정)
+    const jwtOptions: JwtSignOptions = {
+      secret: process.env.JWT_SECRET,
+      expiresIn: process.env.JWT_EXPIRES_IN || '1h',
+    };
+
     const payload = {
       email: user.email,
-      nickname: user.userinfo.nickname,
-      userImageUrl: user.userinfo.imageUrl,
+      userinfo: {
+        nickname: user.userinfo.nickname,
+        imageUrl: user.userinfo.imageUrl,
+      },
       sub: user._id,
     };
+
+    // const token = this.jwtService.sign(payload);
+    const accessToken = this.jwtService.sign(payload, jwtOptions);
+
     return {
-      accessToken: this.jwtService.sign(payload),
+      userId: user._id,
+      email: user.email,
+      userinfo: {
+        nickname: user.userinfo.nickname,
+        imageUrl: user.userinfo.imageUrl,
+      },
+      accessToken,
     };
+
+    // const expiresIn = this.configService.get<number>('JWT_EXPIRES_IN', 12) * 3600;
+    // const accessToken = this.jwtService.sign(payload, {
+    //   expiresIn,
+    //   secret: this.configService.get<string>('JWT_SECRET'),
+    // });
+
+    // return {
+    //   accessToken,
+    //   memberId: member.id,
+    //   email: member.email,
+    //   name: member.userName ?? member.nickName,
+    //   roles: payload.roles,
+    //   expiresAt: new Date(Date.now() + expiresIn * 1000).toISOString(),
+    // };
   }
 }

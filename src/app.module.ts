@@ -8,6 +8,7 @@ import { BannerContentsModule } from './bannerContents/bannerContents.module';
 import { UserModule } from './users/users.module';
 import { ReviewModule } from './reviews/reviews.module';
 import { LoginModule } from './login/login.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
