@@ -16,24 +16,6 @@ export class LoginController {
   private readonly logger = new Logger(LoginController.name);
   constructor(private readonly loginService: LoginService) {}
 
-  // @Post()
-  // async login(
-  //   @Body('email') email: string,
-  //   @Body('password') password: string,
-  // ) {
-  //   const user = await this.loginService.validateUser(email, password);
-  //   if (!user) {
-  //     throw new UnauthorizedException(
-  //       '아이디 또는 비밀번호가 올바르지 않습니다.',
-  //     );
-  //   }
-
-  //   // 로그인 성공 시 JWT 토큰 발급
-  //   const token = await this.loginService.login(user);
-
-  //   return { message: '로그인에 성공했습니다.', ...token };
-  // }
-
   @Post()
   // @HttpCode(HttpStatus.OK)
   async login(
@@ -45,7 +27,6 @@ export class LoginController {
       loginDto.email,
       loginDto.password,
     );
-    //const loginResult = await this.loginService.login(loginDto);
 
     // JWT를 쿠키에 추가 (보안과 관련된 설정 포함)
     res.cookie('access_token', loginResult.accessToken, {
@@ -55,15 +36,7 @@ export class LoginController {
       maxAge: 3600000, // 1시간
     });
     this.logger.warn('cookie added');
-    // return {
-    //   result: 'success',
-    //   userId: loginResult.userId,
-    //   email: loginResult.email,
-    //   userinfo: {
-    //     nickname: loginResult.userinfo.nickname,
-    //     imageUrl: loginResult.userinfo.imageUrl,
-    //   },
-    // };
+
     // 응답 전송
     return res.status(HttpStatus.OK).json({
       result: 'success',
