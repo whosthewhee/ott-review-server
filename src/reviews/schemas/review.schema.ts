@@ -6,6 +6,9 @@ import { User } from 'src/users/schemas/user.schema';
 @Schema()
 export class Review {
   @Prop({ required: true })
+  _id: string;
+
+  @Prop({ required: true })
   rating: number;
 
   @Prop({ required: true })
@@ -24,10 +27,10 @@ export class Review {
   isDeleted: boolean;
 
   //참조 도큐먼트 (contents, users)
-  @Prop({ type: mongoose.Types.ObjectId, ref: 'Content', required: true })
+  @Prop({ type: mongoose.Types.ObjectId, ref: 'contents', required: true })
   contents: Content;
 
-  @Prop({ type: mongoose.Types.ObjectId, ref: 'User', required: true })
+  @Prop({ type: mongoose.Types.ObjectId, ref: 'users', required: true })
   users: User;
 }
 

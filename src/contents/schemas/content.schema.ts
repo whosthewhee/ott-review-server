@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document } from 'mongoose';
+import mongoose, { Document, Types } from 'mongoose';
 import { Category } from 'src/categories/schemas/category.schema';
 import { Platform } from 'src/platforms/schemas/platform.schema';
 
@@ -16,8 +16,9 @@ class ProductionCompany {
 
 @Schema()
 export class Content {
-  @Prop({ required: true })
-  _id: string;
+  // @Prop({ required: true })
+  // _id: string;
+  _id: Types.ObjectId;
 
   @Prop({ required: true })
   title: string;

@@ -1,5 +1,8 @@
+import { Types } from 'mongoose';
+
 export class ResultContentDto {
-  _id: string;
+  //_id: string;
+  _id: Types.ObjectId;
   title: string;
   rating: number;
   imageUrl: string;

@@ -3,28 +3,54 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Review } from './schemas/review.schema';
 import { CreateReviewDto } from './dto/create-review.dto';
+import { ResultReviewDto } from './dto/result-review.dto';
 
 @Injectable()
 export class ReviewService {
   constructor(@InjectModel(Review.name) private reviewModel: Model<Review>) {}
 
   // 모든 리뷰 가져오기
-  async getAllReviews(): Promise<Review[]> {
-    return this.reviewModel
-      .find()
-      .populate([
+  async getAllReviews(): Promise<ResultReviewDto[]> {
+    try {
+      const reviews = await this.reviewModel.find().populate([
         {
-          path: 'contents',
-          select: '_id',
+          path: 'contents', // 참조할 도큐먼트
           model: 'Content',
         },
         {
           path: 'users',
-          select: 'userInfo',
+          select: 'userinfo',
           model: 'User',
         },
-      ])
-      .exec();
+      ]);
+
+      if (this.reviewModel.length === 0) {
+        return null;
+      }
+
+      const data: ResultReviewDto[] = reviews.map((review: Review) => {
+        return {
+          _id: review._id,
+          content: review.content,
+          rating: review.rating,
+          seq: review.seq,
+          createdDate: review.createdDate,
+          updatedDate: review.updatedDate,
+          contents: review.contents, // 참조 도큐먼트
+          users: {
+            userinfo: {
+              nickname: review.users.userinfo.nickname,
+              imageUrl: review.users.userinfo.imageUrl,
+            },
+          },
+        };
+      });
+
+      return data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   }
 
   // 특정 리뷰 가져오기

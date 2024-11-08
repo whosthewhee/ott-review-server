@@ -58,11 +58,16 @@ export class ContentsService {
   }
 
   // 새로운 컨텐츠 생성
-  async createContent(createContentDto: CreateContentDto): Promise<Content> {
+  // async createContent(createContentDto: CreateContentDto): Promise<Content> {
+  //   const newContent = new this.contentModel(createContentDto);
+  //   return newContent.save();
+  // }
+  async createContent(
+    createContentDto: CreateContentDto,
+  ): Promise<ContentDocument> {
     const newContent = new this.contentModel(createContentDto);
     return newContent.save();
   }
-
   // 컨텐츠 업데이트
   // async updateContent(
   //   id: string,
