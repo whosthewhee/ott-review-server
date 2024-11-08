@@ -10,42 +10,52 @@ import {
 import { Response } from 'express';
 import { LoginService } from './login.service';
 import { LoginDto } from './dto/login.dto';
+import { AuthService } from '../auth/auth.service';
 
 @Controller('login')
 export class LoginController {
   private readonly logger = new Logger(LoginController.name);
-  constructor(private readonly loginService: LoginService) {}
+  constructor(
+    private readonly loginService: LoginService,
+    private readonly authService: AuthService,
+  ) {}
 
-  @Post()
-  // @HttpCode(HttpStatus.OK)
-  async login(
-    @Body() loginDto: LoginDto,
-    @Res({ passthrough: true }) res: Response,
-  ) {
-    this.logger.warn('start login');
-    const loginResult = await this.loginService.login(
-      loginDto.email,
-      loginDto.password,
-    );
+  // @Post()
+  // // @HttpCode(HttpStatus.OK)
+  // async login(
+  //   @Body() loginDto: LoginDto,
+  //   @Res({ passthrough: true }) res: Response,
+  // ) {
+  //   this.logger.warn('start login');
+  //   const loginResult = await this.loginService.login(
+  //     loginDto.email,
+  //     loginDto.password,
+  //   );
 
-    // JWT를 쿠키에 추가 (보안과 관련된 설정 포함)
-    res.cookie('access_token', loginResult.accessToken, {
-      httpOnly: true, // 클라이언트 스크립트에서 쿠키 접근 불가
-      secure: true, // HTTPS에서만 전송
-      //secure: process.env.NODE_ENV === 'production', // HTTPS에서만 전송 (배포 환경에서 설정)
-      maxAge: 3600000, // 1시간
-    });
-    this.logger.warn('cookie added');
+  //   // JWT를 쿠키에 추가 (보안과 관련된 설정 포함)
+  //   res.cookie('access_token', loginResult.accessToken, {
+  //     httpOnly: true, // 클라이언트 스크립트에서 쿠키 접근 불가
+  //     secure: true, // HTTPS에서만 전송
+  //     //secure: process.env.NODE_ENV === 'production', // HTTPS에서만 전송 (배포 환경에서 설정)
+  //     maxAge: 3600000, // 1시간
+  //   });
+  //   this.logger.warn('cookie added');
 
-    // 응답 전송
-    return res.status(HttpStatus.OK).json({
-      result: 'success',
-      userId: loginResult.userId,
-      email: loginResult.email,
-      userinfo: {
-        nickname: loginResult.userinfo.nickname,
-        imageUrl: loginResult.userinfo.imageUrl,
-      },
-    });
+  //   // 응답 전송
+  //   return res.status(HttpStatus.OK).json({
+  //     result: 'success',
+  //     userId: loginResult.userId,
+  //     email: loginResult.email,
+  //     userinfo: {
+  //       nickname: loginResult.userinfo.nickname,
+  //       imageUrl: loginResult.userinfo.imageUrl,
+  //     },
+  //   });
+  // }
+
+  // 로그인 로직 구현
+  @Post('login')
+  logIn(@Body() loginDto: LoginDto) {
+    return this.authService.jwtLogin(loginDto);
   }
 }

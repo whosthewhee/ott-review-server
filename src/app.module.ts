@@ -7,8 +7,8 @@ import { PlatformsModule } from './platforms/platforms.module';
 import { BannerContentsModule } from './bannerContents/bannerContents.module';
 import { UserModule } from './users/users.module';
 import { ReviewModule } from './reviews/reviews.module';
-import { LoginModule } from './login/login.module';
-import { JwtModule } from '@nestjs/jwt';
+// import { LoginModule } from './login/login.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -20,7 +20,7 @@ import { JwtModule } from '@nestjs/jwt';
     BannerContentsModule, // BannerContent 모듈 추가
     UserModule, // User 모듈 추가
     ReviewModule, // Review 모듈 추가
-    LoginModule, // Login 모듈 추가
+    AuthModule, // Login 모듈 추가
   ],
 })
 export class AppModule {}
