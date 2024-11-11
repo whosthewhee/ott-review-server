@@ -15,8 +15,11 @@ export class UserService {
   }
 
   // 특정 유저 가져오기
-  async getUserById(id: string): Promise<User> {
-    return this.userModel.findById(id).exec();
+  async getUserByEmail(email: string): Promise<User> {
+    const user = await this.userModel
+      .findOne({ email, isDeleted: false })
+      .exec();
+    return user;
   }
 
   // 비밀번호 암호화

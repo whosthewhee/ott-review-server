@@ -6,20 +6,24 @@ import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './jwt/interfaces/jwt.payload.interface';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from '../login/dto/login.dto';
+import { UserService } from 'src/users/users.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    // @InjectModel(User.name) private userModel: Model<UserDocument>,
+    private readonly userService: UserService,
     private readonly jwtService: JwtService,
   ) {}
 
   async jwtLogin(loginDto: LoginDto) {
     const { email, password } = loginDto;
     //validateUser 함수 내용 바로 사용
-    const user = await this.userModel
-      .findOne({ email, isDeleted: false })
-      .exec();
+    // const user = await this.userModel
+    //   .findOne({ email, isDeleted: false })
+    //   .exec();
+
+    const user = await this.userService.getUserByEmail(email);
     if (!user) {
       throw new UnauthorizedException({
         message: '가입되지 않은 이메일입니다.',
@@ -44,8 +48,19 @@ export class AuthService {
       sub: user._id.toString(),
     };
 
+    // return {
+    //   token: this.jwtService.sign(payload),
+    // };
+
+    const accessToken = this.jwtService.sign(payload);
     return {
-      token: this.jwtService.sign(payload),
+      userId: user._id,
+      email: user.email,
+      userinfo: {
+        nickname: user.userinfo.nickname,
+        imageUrl: user.userinfo.imageUrl,
+      },
+      accessToken,
     };
   }
 }

@@ -10,5 +10,6 @@ import { User, UserSchema } from './schemas/user.schema';
   ],
   controllers: [UserController],
   providers: [UserService],
+  exports: [UserService], // UserService를 내보내기(authModule에서 사용하기위해)
 })
 export class UserModule {}

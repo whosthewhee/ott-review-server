@@ -25,9 +25,9 @@ export class UserController {
   }
 
   // 특정 유저 가져오기
-  @Get(':id')
-  getUserById(@Param('id') id: string) {
-    return this.userService.getUserById(id);
+  @Get(':email')
+  getUserByEmail(@Param('email') email: string) {
+    return this.userService.getUserByEmail(email);
   }
 
   // 유저 생성
