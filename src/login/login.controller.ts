@@ -1,44 +1,16 @@
-import {
-  Controller,
-  Post,
-  Body,
-  Res,
-  HttpCode,
-  HttpStatus,
-  Logger,
-} from '@nestjs/common';
-import { Response } from 'express';
-import { LoginService } from './login.service';
+import { Controller, Post, Body } from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
 import { AuthService } from '../auth/auth.service';
 
 @Controller('login')
 export class LoginController {
-  private readonly logger = new Logger(LoginController.name);
-  constructor(
-    private readonly loginService: LoginService,
-    private readonly authService: AuthService,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Post()
-  // @HttpCode(HttpStatus.OK)
-  async login(
-    @Body() loginDto: LoginDto,
-    @Res({ passthrough: true }) res: Response,
-  ) {
-    this.logger.warn('start login');
+  async login(@Body() loginDto: LoginDto) {
     const loginResult = await this.authService.jwtLogin(loginDto);
 
-    // JWT를 쿠키에 추가 (보안과 관련된 설정 포함)
-    res.cookie('accessToken', loginResult.accessToken, {
-      //httpOnly: true, // 클라이언트 스크립트에서 쿠키 접근 불가
-      //secure: true, // HTTPS에서만 전송
-      maxAge: 3600000, // 1시간
-    });
-    this.logger.warn('cookie added');
-
-    // 응답 전송
-    return res.status(HttpStatus.OK).json({
+    return {
       result: 'success',
       userId: loginResult.userId,
       email: loginResult.email,
@@ -46,13 +18,7 @@ export class LoginController {
         nickname: loginResult.userinfo.nickname,
         imageUrl: loginResult.userinfo.imageUrl,
       },
-      //token: loginResult.accessToken,
-    });
+      token: loginResult.accessToken,
+    };
   }
-
-  // 로그인 로직 구현
-  // @Post()
-  // login(@Body() loginDto: LoginDto, @Res({ passthrough: true }) res: Response,) {
-  //   return this.authService.jwtLogin(loginDto);
-  // }
 }
