@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
+import { Request } from 'express';
 import { JwtPayload } from './interfaces/jwt.payload.interface';
 
 @Injectable()
@@ -8,7 +9,17 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   private readonly logger = new Logger(JwtStrategy.name);
   constructor() {
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // 요청 헤더에서 JWT 토큰을 추출
+      jwtFromRequest: ExtractJwt.fromExtractors([
+        (request: Request) => {
+          let token = null;
+          if (request && request.cookies) {
+            token = request.cookies['accessToken']; // 쿠키에서 토큰 추출
+          }
+
+          this.logger.log(`JWT: ${token}`);
+          return token;
+        },
+      ]),
       secretOrKey: process.env.JWT_SECRET_KEY,
       ignoreExpiration: false,
     });

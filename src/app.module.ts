@@ -21,7 +21,7 @@ import { AuthModule } from './auth/auth.module';
     UserModule, // User 모듈 추가
     ReviewModule, // Review 모듈 추가
     LoginModule, // Login 모듈 추가
-    AuthModule, // Login 모듈 추가
+    AuthModule, // Auth 모듈 추가
   ],
 })
 export class AppModule {}
